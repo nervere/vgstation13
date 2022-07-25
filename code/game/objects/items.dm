@@ -1000,7 +1000,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/verb_pickup(mob/living/user)
+/obj/item/verb_pickup(mob/living)
 	//set src in oview(1)
 	//set category = "Object"
 	//set name = "Pick up"
