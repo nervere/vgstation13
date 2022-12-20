@@ -181,7 +181,7 @@
 		return
 	if(safety)
 		to_chat(user, "<span class='warning'>The safety's on!</span>")
-		playsound(src, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, 'sound/weapons/empty.ogg', 100, 1, gas_modified = 0)
 		return
 	if(current_ammo >0)
 		current_ammo--
@@ -189,7 +189,7 @@
 		user.delayNextAttack(4)
 	else
 		src.visible_message("*click click*")
-		playsound(src, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, 'sound/weapons/empty.ogg', 100, 1, gas_modified = 0)
 
 /obj/item/weapon/pickaxe/plasmacutter/accelerator/attackby(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && istype(target, /obj/item/stack/ore/plasma))

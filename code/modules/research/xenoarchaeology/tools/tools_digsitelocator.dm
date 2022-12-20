@@ -30,7 +30,7 @@
 		if(!C)
 			return
 		cooldown = world.time
-		playtoolsound(src, 50)
+		playtoolsound(src, 50, gas_modified = 0)
 		for(var/turf/unsimulated/mineral/M in range(7, user))
 			if(M.finds.len)
 				var/n = 0

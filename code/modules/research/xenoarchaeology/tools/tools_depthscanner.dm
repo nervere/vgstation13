@@ -30,7 +30,7 @@
 		if(M.finds.len || M.artifact_find)
 			for(var/mob/L in range(src, 1))
 				to_chat(L, "<span class='notice'>[bicon(src)] [src] pings.</span>")
-			playsound(user, 'sound/machines/info.ogg', 20, 1)
+			playsound(user, 'sound/machines/info.ogg', 20, 1, gas_modified = 0)
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
 			D.coords = "[M.x-WORLD_X_OFFSET[M.z]].[rand(0,9)]:[M.y-WORLD_Y_OFFSET[M.z]].[rand(0,9)]:[10 * M.z].[rand(0,9)]"
@@ -58,14 +58,14 @@
 
 			positive_locations.Add(D)
 		else
-			playsound(user, 'sound/items/detscan.ogg', 10, 1)
+			playsound(user, 'sound/items/detscan.ogg', 10, 1, gas_modified = 0)
 
 	else if(istype(A,/obj/structure/boulder))
 		var/obj/structure/boulder/B = A
 		if(B.artifact_find)
 			for(var/mob/L in range(src, 1))
 				to_chat(L, "<span class='notice'>[bicon(src)] [src] pings [pick("madly","wildly","excitedly","crazily")]!</span>")
-			playsound(user, 'sound/items/healthanalyzer.ogg', 50, 1)
+			playsound(user, 'sound/items/healthanalyzer.ogg', 50, 1, gas_modified = 0)
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
 			D.coords = "[10 * (B.x-WORLD_X_OFFSET[B.z])].[rand(0,9)]:[10 * (B.y-WORLD_Y_OFFSET[B.z])].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
@@ -82,7 +82,7 @@
 			to_chat(user,"<span class='notice'>Clearance above anomaly depth: <strong>[rand(5,25)]</strong> cm</span>")
 			to_chat(user,"<span class='notice'>Anomaly material: <strong>Unknown</strong></span>")
 		else
-			playsound(user, 'sound/items/detscan.ogg', 10, 1)
+			playsound(user, 'sound/items/detscan.ogg', 10, 1, gas_modified = 0)
 
 /obj/item/device/depth_scanner/attack_self(var/mob/user as mob)
 	return src.interact(user)

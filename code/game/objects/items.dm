@@ -1684,10 +1684,10 @@ var/global/list/image/blood_overlays = list()
 			else if (bleeding && (D.spread & SPREAD_BLOOD))//if we're covered with a blood-spreading disease, we may infect people with bleeding hands.
 				perp.infect_disease2(D, notes="(Blood, from picking up \a [src])")
 
-/obj/item/proc/playtoolsound(atom/A, var/volume = 75, vary = TRUE, extrarange = null)
+/obj/item/proc/playtoolsound(atom/A, var/volume = 75, vary = TRUE, extrarange = null, var/gas_modified = 1)
 	if(A && toolsounds)
 		var/tool_sound = pick(toolsounds)
-		playsound(A, tool_sound, volume, TRUE, vary)
+		playsound(A, tool_sound, volume, TRUE, vary, FALLOFF_SOUNDS, gas_modified)
 
 /obj/item/proc/playsurgerysound(atom/A, var/volume = 75)
 	if(A && surgerysound)

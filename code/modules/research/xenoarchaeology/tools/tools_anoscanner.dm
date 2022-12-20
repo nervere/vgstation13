@@ -45,5 +45,5 @@
 			else
 				SSxenoarch.artifact_spawning_turfs.Remove(T)
 
-	playtoolsound(src, 50)
+	playtoolsound(src, 50, gas_modified = 0)
 	cur_turf.visible_message("<span class='info'>[src] clicks.</span>")
