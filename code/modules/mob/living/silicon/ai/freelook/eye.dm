@@ -1,11 +1,14 @@
 // AI EYE
 //
-// An invisible (no icon) mob that the AI controls to look around the station with.
+// An invisible (to crewmembers) mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
 	anchored = TRUE
+	invisibility = 60 //only ghosts (and the mob controller) can see
+	icon = 'icons/mob/AI.dmi'
+	icon_state = "ai_eye"
 
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
