@@ -1271,6 +1271,19 @@
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor/plating,
 /area/vault/fastfood/misc)
+"Cn" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/vault/fastfood/dining)
 "Cy" = (
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor3"
@@ -1489,7 +1502,17 @@
 	},
 /area/vault/fastfood)
 "Gb" = (
-/obj/window_grille_spawner/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/vault/fastfood/misc)
 "Gf" = (
@@ -1556,6 +1579,17 @@
 	icon_state = "freezerfloor"
 	},
 /area/vault/fastfood/kitchen)
+"Hy" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/vault/fastfood/dining)
 "HR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
@@ -1628,8 +1662,17 @@
 	},
 /area/vault/fastfood/dining)
 "Jw" = (
-/obj/window_grille_spawner/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/vault/fastfood/dining)
 "JE" = (
@@ -1669,7 +1712,17 @@
 	},
 /area/vault/fastfood)
 "JJ" = (
-/obj/window_grille_spawner/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/vault/fastfood/kitchen)
 "JK" = (
@@ -1735,7 +1788,13 @@
 	},
 /area/vault/fastfood/kitchen)
 "KI" = (
-/obj/window_grille_spawner/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/vault/fastfood/dining)
 "KY" = (
@@ -1887,6 +1946,14 @@
 	icon_state = "bar"
 	},
 /area/vault/fastfood/dining)
+"Nj" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/vault/fastfood/dining)
 "Nn" = (
 /obj/structure/table/plastic,
 /obj/item/weapon/kitchen/utensil/fork,
@@ -1995,6 +2062,17 @@
 	icon_state = "freezerfloor"
 	},
 /area/vault/fastfood/misc)
+"ON" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/vault/fastfood/dining)
 "Pp" = (
 /obj/structure/bed/chair/comfy/couch/right/red{
 	dir = 1
@@ -2511,14 +2589,14 @@ tT
 wH
 wH
 wH
-KI
-KI
+Cn
+ON
 wH
 wH
+Cn
 KI
 KI
-KI
-KI
+Nj
 aa
 mS
 pC
@@ -2543,7 +2621,7 @@ Yh
 rP
 bu
 Wn
-KI
+Hy
 JQ
 HR
 mx
@@ -2593,7 +2671,7 @@ Yh
 BJ
 xk
 Yh
-KI
+Jw
 qO
 Gb
 JQ
@@ -2718,7 +2796,7 @@ KY
 DS
 zB
 Iw
-KI
+Jw
 aa
 mX
 mX

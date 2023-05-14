@@ -6,6 +6,10 @@
 	var/obj/structure/grille/grille_path = /obj/structure/grille
 	var/activated = FALSE
 
+/obj/window_grille_spawner/New()
+	if(ticker)
+		initialize()
+
 /obj/window_grille_spawner/initialize()
 	. = ..()
 	activate()

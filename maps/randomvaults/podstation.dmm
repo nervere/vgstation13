@@ -110,11 +110,16 @@
 /turf/simulated/floor/dark,
 /area/vault/podstation)
 "bP" = (
-/obj/window_grille_spawner/reinforced,
-/obj/structure/window/barricade/full/block,
-/turf/simulated/floor{
-	icon_state = "bluefull"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/barricade/full/block,
+/turf/simulated/floor/plating,
 /area/vault/podstation)
 "bX" = (
 /obj/structure/spacepod_frame/unarmored{
@@ -173,13 +178,23 @@
 /turf/space,
 /area/vault/podstation)
 "dp" = (
-/obj/window_grille_spawner/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
 	id_tag = "podstationoffice";
 	name = "Office Shutters"
 	},
-/turf/simulated/floor/dark,
+/turf/simulated/floor/plating,
 /area/vault/podstation)
 "dK" = (
 /obj/structure/bed/chair/office,
@@ -525,9 +540,18 @@
 /turf/simulated/floor,
 /area/vault/podstation)
 "lj" = (
-/obj/window_grille_spawner/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/window/barricade/full/block,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/vault/podstation)
 "lt" = (
 /obj/item/weapon/barricade_kit,
@@ -715,6 +739,18 @@
 "oZ" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/unsimulated/floor/asteroid/underground,
+/area/vault/podstation)
+"pk" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/barricade/full/block,
+/turf/simulated/floor/plating,
 /area/vault/podstation)
 "pn" = (
 /obj/structure/bed/chair{
@@ -1052,6 +1088,15 @@
 /area/vault/podstation)
 "xt" = (
 /obj/structure/closet/walllocker/emerglocker/north,
+/turf/simulated/floor/plating,
+/area/vault/podstation)
+"yh" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/barricade/full/block,
 /turf/simulated/floor/plating,
 /area/vault/podstation)
 "yE" = (
@@ -1441,6 +1486,18 @@
 /obj/effect/decal/warning_stripes/pathmarkers,
 /turf/unsimulated/floor/asteroid/underground,
 /area/vault/podstation)
+"KM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/barricade/full/block,
+/turf/simulated/floor/plating,
+/area/vault/podstation)
 "LD" = (
 /obj/structure/table,
 /obj/machinery/light/broken{
@@ -1561,6 +1618,17 @@
 /obj/structure/spacepod_frame,
 /turf/unsimulated/floor/asteroid/underground,
 /area/vault/podstation)
+"PL" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/barricade/full/block,
+/turf/simulated/floor/plating,
+/area/vault/podstation)
 "Qp" = (
 /obj/structure/table,
 /obj/item/weapon/tray,
@@ -1597,6 +1665,21 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layered{
 	dir = 6
 	},
+/turf/simulated/floor/plating,
+/area/vault/podstation)
+"RK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/barricade/full/block,
 /turf/simulated/floor/plating,
 /area/vault/podstation)
 "RO" = (
@@ -2329,7 +2412,7 @@ pU
 ES
 ES
 Yx
-bP
+yh
 fI
 kC
 mM
@@ -2374,7 +2457,7 @@ pU
 VS
 ES
 Yx
-bP
+KM
 fZ
 kQ
 mW
@@ -2691,15 +2774,15 @@ ES
 Yx
 Kk
 Kk
-lj
+RK
 Kk
 Kk
 xq
 xq
 Kk
 lj
-lj
-lj
+PL
+pk
 Kk
 ZP
 Kk
