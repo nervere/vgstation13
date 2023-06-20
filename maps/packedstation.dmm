@@ -146,7 +146,9 @@
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
-/obj/structure/shuttle/diag_wall/smooth,
+/obj/structure/shuttle/diag_wall/smooth{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/shuttle/escape_pod3)
 "aaz" = (
