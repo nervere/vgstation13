@@ -412,7 +412,7 @@
 					to_chat(ghostmob, "<span class='warning'>Someone is trying to clone your corpse, but you may not be revived as you committed suicide.</span>")
 		return
 
-	if(M_NOCLONE in subject.mutations) //We cannot clone this guy because he's a husk, but maybe we can give a more informative message.
+	if(M_NOCLONE in subject.mutations || M_HUSK in subject.mutations) //We cannot clone this guy because he's a husk, but maybe we can give a more informative message.
 		if(subject.client)
 			scantemp = "Error: Unable to locate valid genetic data. However, mental interface initialized successfully."
 			to_chat(subject, "<span class='interface'><span class='big bold'>Someone is trying to clone your corpse.</span> \
