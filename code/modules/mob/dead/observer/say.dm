@@ -12,6 +12,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
 
+	message = process_chat_markup(message, list("~", "_"))
 	. = src.say_dead(message)
 
 /mob/dead/observer/say_quote(var/text)

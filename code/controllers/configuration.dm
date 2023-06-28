@@ -76,6 +76,7 @@
 	var/copy_logs = null
 	var/cargo_forwarding_on_roundstart = 0
 	var/cargo_forwarding_amount_override = 0
+	var/allow_chat_markup = 0
 
 	// BSQL things
 	var/bsql_debug = 0
@@ -629,6 +630,9 @@
 
 				if ("kill_phrase")
 					kill_phrase = value
+
+				if("allow_chat_markup")
+					config.allow_chat_markup = TRUE
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

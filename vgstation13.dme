@@ -59,6 +59,7 @@
 #include "__DEFINES\qdel.dm"
 #include "__DEFINES\rcd.dm"
 #include "__DEFINES\reagents.dm"
+#include "__DEFINES\regex.dm"
 #include "__DEFINES\research_levels.dm"
 #include "__DEFINES\rigbuilding.dm"
 #include "__DEFINES\role_datums_defines.dm"

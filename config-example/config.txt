@@ -375,3 +375,6 @@ BSQL_THREAD_LIMIT 50
 
 ## Uncomment to enable verbose BSQL communication logs
 #BSQL_DEBUG
+
+##Uncomment to enable simple Skype/Discord style markup over say.
+ALLOW_CHAT_MARKUP

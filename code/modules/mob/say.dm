@@ -32,6 +32,7 @@
 		return
 
 	message = html_encode(sanitize_speech(message))
+	message = process_chat_markup(message, list("~", "_"))
 
 	if(usr.stat == DEAD)
 		usr.emote_dead(message)

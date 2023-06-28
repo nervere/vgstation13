@@ -128,6 +128,9 @@ var/list/headset_modes = list(
 		return
 
 	var/message_mode = get_message_mode(message)
+
+	message = process_chat_markup(message, list("~", "_"))
+
 	if(silent)
 		to_chat(src, "<span class='warning'>You can't speak while silenced.</span>")
 		return
