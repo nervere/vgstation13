@@ -230,11 +230,12 @@ var/datum/controller/gameticker/ticker
 		if(job)
 			job.equip(M, job.priority) // Outfit datum.
 
-	handle_lights()
-
 	//delete the new_player mob for those who readied
 	for(var/mob/np in new_players_ready)
 		qdel(np)
+
+	spawn()
+		handle_lights()
 
 	if(!already_an_ai && clowns.len >= 2 && prob(1))
 		var/mob/living/carbon/human/H = pick(clowns)
