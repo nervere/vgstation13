@@ -17,7 +17,7 @@
 	var/silentbite = FALSE
 
 	var/deadchat = FALSE			/* When true, vampires can hear deadchat. */
-	var/deadchat_delay = FALSE 		/* Used to indicate that handle_deadchat() is in the middle of granting deadchat to a vampire. Makes deadchat warning more graceful. */
+	var/deadchat_delay = FALSE 		/* Used to indicate that handle_deadspeak() is in the middle of granting deadchat to a vampire. Makes deadchat warning more graceful. */
 	var/deadchat_timer = 0 			/* Handles cooldown before next period of deadchat listening is allowed. */
 
 	var/nullified = 0
@@ -349,8 +349,11 @@
 		return
 	if((locate(/datum/power/vampire/charisma) in current_powers) && world.time >= deadchat_timer)
 		var/duration = rand(200, 400) //hear deadchat for 20-40 seconds, every five or so minutes
+		var/vampywampy = antag.current
 		for(var/mob/M in get_deadchat_hearers())
-			var/rendered = "\proper<a href='?src=\ref[M];follow2=\ref[M];follow=\ref[antag.current]'>(Follow)</a><span class='recruit'> In 5 seconds, \The <span class='name'>[antag.current]</span>, a powerful vampire, will be able to hear deadchat for [duration/10] seconds.</span>"
+			if(!M.stat == 2 && !H.client.holder) /* We don't want living people with access to deadchat to hear this. */
+				continue
+			var/rendered = "\proper<a href='?src=\ref[M];follow2=\ref[M];follow=\ref[vampywampy]'>(Follow)</a><span class='recruit'> In 5 seconds, \the <span class='name'>[vampywampy]</span>, a powerful vampire, will be able to hear deadchat for [duration/10] seconds.</span>"
 			to_chat(M, rendered)
 		deadchat_delay = TRUE /* Prevent the proc from firing again while sleep occurs. */
 		sleep(5 SECONDS)
@@ -360,6 +363,8 @@
 			if(H.stat != DEAD)
 				deadchat_timer = world.time + rand(2700, 3300)
 				deadchat = FALSE
+				if(vampywampy)
+					to_deadchat(TRUE, "\proper<span class='recruit'>As the ethereal tides shift, so too does \the [vampywampy]'s capacity to hear ghosts.<br>The dead are alone with their thoughts once more.</span>")
 
 /datum/role/vampire/proc/handle_smite(var/mob/living/carbon/human/H)
 	var/smitetemp = 0

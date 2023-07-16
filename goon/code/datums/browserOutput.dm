@@ -365,11 +365,14 @@ For the main html chat area
 
 /* This proc only handles sending the message to everyone who can hear deadchat. Formatting that message is up to you! Consider using <span class='game deadsay'></span> on your message! */
 /* Kinda useless if your message needs to include an href, though... */
-/proc/to_deadchat(message)
+/proc/to_deadchat(var/ignore_living = FALSE, message)
 	var/list/hearers = get_deadchat_hearers()
 	if(!hearers || !message)
 		return
 	for(var/mob/M in hearers)
+		if(ignore_living)
+			if(!M.stat == 2 && !M.client.holder)
+				continue
 		to_chat(M, message)
 	log_game("DEADCHAT: [message]")
 	return 1
