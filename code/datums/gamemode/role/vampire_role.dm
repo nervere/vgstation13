@@ -15,8 +15,11 @@
 
 	var/iscloaking = FALSE
 	var/silentbite = FALSE
-	var/deadchat_timer = 0
-	var/deadchat = FALSE
+
+	var/deadchat = FALSE			/* When true, vampires can hear deadchat. */
+	var/deadchat_delay = FALSE 		/* Used to indicate that handle_deadchat() is in the middle of granting deadchat to a vampire. Makes deadchat warning more graceful. */
+	var/deadchat_timer = 0 			/* Handles cooldown before next period of deadchat listening is allowed. */
+
 	var/nullified = 0
 	var/smitecounter = 0
 
@@ -342,16 +345,20 @@
 		to_chat(C, "<span class='sinister'>Your heart is filled with dread, and you shake uncontrollably.</span>")
 
 /datum/role/vampire/proc/handle_deadspeak(var/mob/living/carbon/human/H)
-	if(deadchat)
+	if(deadchat || deadchat_delay || H.stat == DEAD)
 		return
-	if(H.stat == DEAD)
-		return
-	if((locate(/datum/power/vampire/charisma) in current_powers) && world.time > deadchat_timer)
+	if((locate(/datum/power/vampire/charisma) in current_powers) && world.time >= deadchat_timer)
+		var/duration = rand(200, 400) //hear deadchat for 20-40 seconds, every five or so minutes
+		for(var/mob/M in get_deadchat_hearers())
+			var/rendered = "\proper<a href='?src=\ref[M];follow2=\ref[M];follow=\ref[antag.current]'>(Follow)</a><span class='recruit'> In 5 seconds, \The <span class='name'>[antag.current]</span>, a powerful vampire, will be able to hear deadchat for [duration/10] seconds.</span>"
+			to_chat(M, rendered)
+		deadchat_delay = TRUE /* Prevent the proc from firing again while sleep occurs. */
+		sleep(5 SECONDS)
 		deadchat = TRUE
-		//have deadchat for 30 seconds every five minutes
-		spawn(rand(200, 400))
+		deadchat_delay = FALSE /* Proc has woken up, and deadchat is enabled! */
+		spawn(duration)
 			if(H.stat != DEAD)
-				deadchat_timer = world.time + 1800 + rand(300, 1200)
+				deadchat_timer = world.time + rand(2700, 3300)
 				deadchat = FALSE
 
 /datum/role/vampire/proc/handle_smite(var/mob/living/carbon/human/H)
