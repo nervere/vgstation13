@@ -7,11 +7,35 @@
 //This allowed you to, for example, start a middle-click drag on someone and then have an aimbot that allows you to effortlessly hit them in melee or ranged combat as long as you held MMB.
 //This code discards clicks performed during a drag to prevent this.
 /client/Click(object, location, control, params)
+	handle_clickspam()
 	var/list/p = params2list(params)
 	if(p["drag"])
 		return
 	..()
 
+var/global/testing = 0
+
+/client/proc/handle_clickspam()
+	clicks++
+	if(!last_click)
+		last_click = world.time
+		return
+	var/click_delay = world.time - last_click
+	last_click = world.time
+	if(click_delay > 2)
+		clicks = 0
+		return
+	if(clicks < testing)
+		return
+	to_chat(world, "autoclicker check passed")
+
+/mob/verb/set_threshold()
+	set name = "set threshold"
+	set category = "OOC"
+	
+	testing = input("set click #") as num
+	
+	
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.

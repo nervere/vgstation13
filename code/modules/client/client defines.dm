@@ -34,6 +34,8 @@
 		//SECURITY//
 		////////////
 	var/next_allowed_topic_time = 10
+	var/clicks = 0
+	var/last_click = 0
 	// comment out the line below when debugging locally to enable the options & messages menu
 	// CONTROL_FREAK_MACROS allows new macros to be made, but won't permit overriding skin-defined ones.  http://www.byond.com/forum/?post=2219001#comment22205313
 	// control_freak = CONTROL_FREAK_ALL | CONTROL_FREAK_MACROS
