@@ -208,10 +208,10 @@
 				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 			qdel(src)
 
-		if( iswelder(W) )
+		if(iswelder(W))
 			var/obj/item/tool/weldingtool/WT = W
 			if(WT.welding )
-				if(!mineral)
+				if(!mineral || mineral == "metal")
 					T.ChangeTurf(/turf/simulated/wall)
 				else
 					T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
@@ -219,22 +219,22 @@
 					T = get_turf(src)
 					T.attackby(W,user)
 				qdel(src)
+
+		if(istype(W, /obj/item/weapon/pickaxe))
+			var/obj/item/weapon/pickaxe/used_pick = W
+			if(!(used_pick.diggables & DIG_WALLS))
+				return
+			if(!mineral || mineral == "metal")
+				T.ChangeTurf(/turf/simulated/wall)
+			else
+				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
+			if(mineral != "plasma")
+				T = get_turf(src)
+				T.attackby(W,user)
+			qdel(src)
+
 	else
 		to_chat(user, "<span class='notice'>You can't reach, close it first!</span>")
-
-	if( istype(W, /obj/item/weapon/pickaxe) )
-		var/obj/item/weapon/pickaxe/used_pick = W
-		if(!(used_pick.diggables & DIG_WALLS))
-			return
-		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != "plasma")
-			T = get_turf(src)
-			T.attackby(W,user)
-		qdel(src)
 
 /obj/structure/falsewall/suicide_act(var/mob/living/user)
 	if(density)
