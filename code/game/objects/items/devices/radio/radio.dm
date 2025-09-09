@@ -24,6 +24,7 @@
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = FPRINT | HEAR
 	siemens_coefficient = 1
+	var/emp_shielded = 0
 	slot_flags = SLOT_BELT
 	throw_speed = 2
 	throw_range = 9
@@ -568,13 +569,20 @@
 	add_fingerprint(user)
 
 /obj/item/device/radio/emp_act(severity)
+	if(emp_shielded)
+		return
 	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	for(var/mob/living/simple_animal/hostile/pulse_demon/PD in contents)
 		PD.emp_act(severity) // Not inheriting so do it here too
+	fizzle()
 	..()
+
+/obj/item/device/radio/proc/fizzle()
+	for(var/mob/M in hearers(1, loc))
+		M.show_message("\The [bicon(src)] [src] blares static, fizzling and crackling, before going completely silent.")
 
 /obj/item/device/radio/phone
 	name = "radio phone"

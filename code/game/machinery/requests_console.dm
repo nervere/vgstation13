@@ -61,7 +61,7 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 	var/announceSound = 'sound/vox/_bloop.wav'
 	luminosity = 0
 	use_auto_lights = 1
-	
+
 	var/obj/landline/landline
 
 /obj/machinery/requests_console/power_change()
@@ -158,7 +158,7 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 	"Bridge" = 						list("Command"),
 	"Captain's Desk" =				list("Command"),
 	"Chief Engineer's Desk" =		list("Command","Engineering"),
-	"Atmospherics" = 				list("Engineering"),	
+	"Atmospherics" = 				list("Engineering"),
 	"Engineering" =					list("Engineering"),
 	"Mechanics" =					list("Engineering","Research"),
 	"Chief Medical Officer's Desk"= list("Command","Medical"),
@@ -203,12 +203,12 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 		"Civilian" = ";",
 		"other" = "?"
 		)
-		
+
 	master_department_short = department2key[master_department[1]]
 	if(!master_department_short)
 		master_department_short = "ERROR"
 	add_to_global_rc_list()
-	
+
 
 /obj/machinery/requests_console/attack_ghost(user as mob)
 	if(..())
@@ -325,18 +325,18 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 				if ((announceAuth || is_malf_owner(user)) && message)
 					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce</A><BR>")
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
-				
+
 			if(11) //select console to dial from previously chosen department
 				dat += text("Available [landline.chosen_department] telephones:<BR>")
 				for(var/obj/machinery/requests_console/subdept in requests_consoles_categorised[landline.chosen_department])
 					dat += ("<A href='?src=\ref[src];dialConsole=\ref[subdept]'>[subdept.phone_name ? subdept.phone_name : subdept.department]</A><BR>")
 					//apostrophes in the string break the hrefs so i'm referencing and locate()ing the thing
 				dat += text("<BR><A href='?src=\ref[src];setScreen=4'>Back</A><BR>")
-				
+
 			if(12) //last call log
 				dat += landline.last_call_log
 				dat += text("<BR><A href='?src=\ref[src];setScreen=11'>Back</A><BR>")
-			
+
 			else	//main menu
 				screen = 0
 				announceAuth = 0
@@ -349,12 +349,12 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 				dat += text("<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>")
-				
+
 				dat += text("<A href='?src=\ref[src];setScreen=4'>Make a call</A><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=12'>Last call log</A><BR><BR>")
 				if(announcementConsole)
 					dat += text("<A href='?src=\ref[src];setScreen=10'>Send station-wide announcement</A><BR><BR>")
-				
+
 				dat += text("<A href='?src=\ref[src];setScreen=5'>Configure Panel</A><BR>")
 				dat += text("Speaker:<A href='?src=\ref[src];toggleSilent=1'>[silent ? "OFF" : "ON"]</A>")
 				dat += text("  Ringer:<A href='?src=\ref[src];toggleRinger=1'>[landline.ringer ? "ON" : "OFF"]</A>")
@@ -438,7 +438,7 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 									Console.update_icon()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/request_urgent.ogg', 50, 1)
-									Console.visible_message("The [Console] beeps; <span class='bold'>PRIORITY Alert at [department]</span>")
+									Console.visible_message("\The [Console] beeps; <span class='bold'>PRIORITY Alert at [department]</span>")
 									sleep(10)
 									playsound(Console.loc, 'sound/machines/request_urgent.ogg', 50, 1)
 									sleep(10)
@@ -481,7 +481,7 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 			screen = 2
 		if(3)		//relay information
 			screen = 3
-		if(4)		//landline telephone 
+		if(4)		//landline telephone
 			screen = 4
 		if(5)		//configure
 			screen = 5
@@ -526,7 +526,7 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 		var/a = landline.start_call(R.landline)
 		landline.last_call_log += text("[a]<BR>")
 		screen = 12
-		
+
 	updateUsrDialog()
 	return
 
@@ -629,7 +629,7 @@ var/list/requests_consoles_categorised = list("Command" = list(),"Engineering" =
 		to_chat(user, "<span class='notice'>You are too far away!</span>")
 		return
 	pick_up_phone(user)
-	
+
 /obj/machinery/requests_console/mechanic
 	name = "\improper Mechanics requests console"
 	department = "Mechanics"

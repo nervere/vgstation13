@@ -48,6 +48,15 @@
 			return ..(freq, level)
 	return -1
 
+/obj/item/device/radio/headset/fizzle()
+	if(ishuman(src.loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.ears == src)
+			H.show_message("<span class='warning'>Your [bicon(src)] [src.name] crackles loudly with static, before falling completely silent.</span>", type = 2)
+			return
+	..()
+
+
 /obj/item/device/radio/headset/syndicate
 	origin_tech = Tc_SYNDICATE + "=3"
 	syndie = 1
@@ -56,9 +65,7 @@
 /obj/item/device/radio/headset/revsquad
 	init_keyslot2_type = /obj/item/device/encryptionkey/rev
 	syndie = 1
-
-/obj/item/device/radio/headset/revsquad/emp_act()
-	return
+	emp_shielded = 1
 
 /obj/item/device/radio/headset/syndicate/commando/initialize()
 	. = ..()
