@@ -580,7 +580,6 @@
 					"<span class='warning'>This is too sad! You start to cry.</span>")
 			if (E.damage >= E.min_broken_damage)
 				user.simple_message("<span class='warning'>You go blind!</span>","<span class='warning'>Somebody turns the lights off.</span>")
-				user.sdisabilities |= BLIND
 			else if (E.damage >= E.min_bruised_damage)
 				user.simple_message("<span class='warning'>You go blind!</span>","<span class='warning'>Somebody turns the lights off.</span>")
 				user.eye_blind = 5

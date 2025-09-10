@@ -389,7 +389,8 @@
 		"dermaline_amount" = H.reagents.get_reagent_amount(DERMALINE),
 		"blood_amount" = H.vessel.get_reagent_amount(BLOOD),
 		"all_chems" = H.reagents.reagent_list,
-		"disabilities" = H.sdisabilities,
+		"disabilities" = H.disabilities,
+		"sdisabilities" = H.sdisabilities,
 		"tg_diseases_list" = H.viruses,
 		"lung_ruptured" = H.is_lung_ruptured(),
 		"external_organs" = H.organs.Copy(),
@@ -609,10 +610,11 @@
 		dat += "<tr><td>[initial(i.name)]</td><td>-</td><td>-</td><td><font color='red'>Not Found</font></td></tr>"
 	dat += "</table>"
 
+	if(occ["disabilities"] & NEARSIGHTED)
+		dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 	if(occ["sdisabilities"] & BLIND)
 		dat += text("<font color='red'>Cataracts detected.</font><BR>")
-	if(occ["sdisabilities"] & NEARSIGHTED)
-		dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
+
 	return dat
 
 /obj/machinery/bodyscanner/Hear(var/datum/speech/speech, var/rendered_speech="")

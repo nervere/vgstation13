@@ -85,7 +85,8 @@
 		"blood_amount" = H.vessel.get_reagent_amount(BLOOD),
 		"all_chems" = H.reagents.reagent_list,
 		"btype" = H.dna.b_type,
-		"disabilities" = H.sdisabilities,
+		"disabilities" = H.disabilities,
+		"sdisabilities" = H.sdisabilities,
 		"tg_diseases_list" = H.viruses,
 		"lung_ruptured" = H.is_lung_ruptured(),
 		"external_organs" = H.organs.Copy(),
@@ -253,10 +254,11 @@
 		dat += "</tr>"
 	dat += "</table>"
 
+	if(occ["disabilities"] & NEARSIGHTED)
+		dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 	if(occ["sdisabilities"] & BLIND)
 		dat += text("<font color='red'>Cataracts detected.</font><BR>")
-	if(occ["sdisabilities"] & NEARSIGHTED)
-		dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
+
 	return dat
 
 /obj/item/verbs/borer/attached_chest/brute_resist/verb/brute_resist()
