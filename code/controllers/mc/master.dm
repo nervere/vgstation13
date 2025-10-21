@@ -6,7 +6,7 @@
   * Odds are, there is a reason
   *
  **/
-var/datum/controller/master/Master = new()
+var/datum/controller/master/Master = new() /* indev: <- make this global */
 var/MC_restart_clear = 0
 var/MC_restart_timeout = 0
 var/MC_restart_count = 0
@@ -57,6 +57,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (istype(Master))
 			Recover()
 			qdel(Master)
+			/* indev: Master = src*/
 		else
 			init_subtypes(/datum/subsystem, subsystems)
 		Master = src
@@ -94,7 +95,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 
 /datum/controller/master/proc/Recover()
-	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
+	var/msg = "Master Controller restarted. Reports:\n"
 	for (var/varname in Master.vars)
 		switch (varname)
 			if("name", "tag", "bestF", "type", "parent_type", "vars", "statclick") // Built-in junk.
@@ -106,7 +107,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 					msg += "\t [varname] = [D]([D.type])\n"
 				else
 					msg += "\t [varname] = [varval]\n"
-	world.log << msg
+	log_mc(msg)
 	if (istype(Master.subsystems))
 		subsystems = Master.subsystems
 		spawn (10)
@@ -147,7 +148,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	time_taken_in_lobby = world.timeofday
 
 	to_chat(world, "<span class='boldannounce'>Initializations complete in [time_taken_to_init / 10] seconds!</span>")
-	world.log << "Initializations complete. Took [time_taken_to_init / 10] seconds."
+	log_mc("Initializations complete. Took [time_taken_to_init / 10] seconds.")
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
@@ -174,15 +175,23 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	usr = null
 	var/rtn = Loop()
 	if (rtn > 0 || processing < 0)
-		return //this was suppose to happen.
+		return //this was supposed to happen
+
 	//loop ended, restart the mc
+	log_mc("Master Controller has crashed or runtimed, restarting by calling Recreate_MC()")
 	log_game("MC crashed or runtimed, restarting")
 	message_admins("MC crashed or runtimed, restarting")
 	var/rtn2 = Recreate_MC()
-	if (rtn2 <= 0)
-		log_game("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
-		message_admins("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
-		Failsafe.defcon = 2
+	switch(rtn2)
+		if(-1) /* Either failed to re-create a new MC or Recreate_MC() runtimed. */
+			log_mc("Failed to re-create MC. It's up to the failsafe now. (proc returned: [rtn2])")
+			log_game("Failed to re-create MC. It's up to the failsafe now. (proc returned: [rtn2])")
+			message_admins("Failed to re-create MC. It's up to the failsafe now. (proc returned: [rtn2])")
+			Failsafe.defcon = 2
+		if(0) /* Skipped trying to re-create MC again due to cooldown. */
+			log_mc("Attempted to create new MC, but proc is on cooldown. (proc returned: [rtn2])")
+		if(1) /* MC successfully re-created. */
+			log_mc("Successfully re-created MC. (proc returned: [rtn2])")
 
 // Main loop.
 /datum/controller/master/proc/Loop()
@@ -271,8 +280,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		else
 			subsystems_to_check = tickersubsystems
 		if (CheckQueue(subsystems_to_check) <= 0)
+			log_mc("Main loop: CheckQueue() execution failed at [world.time]. Trying a SoftReset()...")
 			if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
-				world.log << "MC: SoftReset() failed, crashing"
+				log_mc("Main loop: SoftReset() failed after CheckQueue() failed at [world.time], crashing")
 				return
 			if (!error_level)
 				iteration++
@@ -282,8 +292,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 		if (queue_head)
 			if (RunQueue() <= 0)
+				log_mc("Main loop: RunQueue() execution failed at [world.time]. Trying a SoftReset()...")
 				if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
-					world.log << "MC: SoftReset() failed, crashing"
+					log_mc("Main loop: SoftReset() failed after RunQueue() failed at [world.time], crashing")
 					return
 				if (!error_level)
 					iteration++
@@ -455,9 +466,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 //	called if any mc's queue procs runtime or exit improperly.
 /datum/controller/master/proc/SoftReset(list/ticker_SS, list/normal_SS, list/lobby_SS)
 	. = 0
-	world.log << "MC: SoftReset called, resetting MC queue state."
+	log_mc("SoftReset called, resetting MC queue state.")
 	if (!istype(subsystems) || !istype(ticker_SS) || !istype(normal_SS) || !istype(lobby_SS))
-		world.log << "MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[normal_SS]' '[lobby_SS]' Crashing!"
+		log_mc("SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[normal_SS]' '[lobby_SS]' Crashing!")
 		return
 	var/subsystemstocheck = subsystems + ticker_SS + normal_SS + lobby_SS
 
@@ -469,26 +480,26 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			ticker_SS -= list(SS)
 			normal_SS -= list(SS)
 			lobby_SS -= list(SS)
-			world.log << "MC: SoftReset: Found bad entry in subsystem list, '[SS]'"
+			log_mc("SoftReset: Found bad entry in subsystem list, '[SS]'")
 			continue
 		if (SS.queue_next && !istype(SS.queue_next))
-			world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_next = '[SS.queue_next]'"
+			log_mc("SoftReset: Found bad data in subsystem queue, queue_next = '[SS.queue_next]'")
 		SS.queue_next = null
 		if (SS.queue_prev && !istype(SS.queue_prev))
-			world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_prev = '[SS.queue_prev]'"
+			log_mc("SoftReset: Found bad data in subsystem queue, queue_prev = '[SS.queue_prev]'")
 		SS.queue_prev = null
 		SS.queued_priority = 0
 		SS.queued_time = 0
 		SS.state = SS_IDLE
 	if (queue_head && !istype(queue_head))
-		world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_head = '[queue_head]'"
+		log_mc("SoftReset: Found bad data in subsystem queue, queue_head = '[queue_head]'")
 	queue_head = null
 	if (queue_tail && !istype(queue_tail))
-		world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_tail = '[queue_tail]'"
+		log_mc("SoftReset: Found bad data in subsystem queue, queue_tail = '[queue_tail]'")
 	queue_tail = null
 	queue_priority_count = 0
 	queue_priority_count_bg = 0
-	world.log << "MC: SoftReset: Finished."
+	log_mc("SoftReset: Finished.")
 	. = 1
 
 

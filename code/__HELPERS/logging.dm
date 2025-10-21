@@ -1,6 +1,6 @@
 //print an error message to world.log
 /proc/error(msg)
-	world.log << "## ERROR: [msg]"
+	world.log << "\[[time_stamp()]]ERROR: [msg]"
 
 /*
  * print a warning message to world.log
@@ -76,6 +76,9 @@
 	if (config.log_adminghost)
 		diary << html_decode("\[[time_stamp()]]GHOST: [text]")
 		message_admins("\[GHOST\] [text]")
+
+/proc/log_mc(text)
+	world.log << "\[[time_stamp()]]MC: [text]"
 
 
 /**
